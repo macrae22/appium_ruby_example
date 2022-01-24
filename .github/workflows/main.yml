@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+
+      - name: Warm up Xcode and SDK
+        run: |
+          echo "Running xcrun to determine SDK version..."
+          xcrun --sdk iphonesimulator --show-sdk-version
+          echo "Xcode SDK check complete."
+          
+      - name: Install Appium and XCUITest Driver
+        run: |
+          npm install -g appium
+          appium driver install xcuitest
+
+      - name: Start Appium Server with Debug Logging
+        run: |
+          # Create the log file first to ensure permissions are correct
+          touch appium.log
+
+          # Start appium in the background using a more portable redirection
+          appium --log-level debug > appium.log 2>&1 &
+          
+          echo "Waiting for Appium server to start..."
+          timeout=60
+          while ! curl -s http://127.0.0.1:4723/status && [ $timeout -gt 0 ]; do
+            sleep 1
+            timeout=$((timeout-1))
+          done
+          
+          if [ $timeout -eq 0 ]; then
+            echo "Appium server failed to start in time."
+            # Print the log file for immediate debugging before exiting
+            cat appium.log
+            exit 1
+          fi
+          
+          echo "Appium server is ready."
+
+      - name: Boot Simulator
+        run: |
+          echo "Available simulators:"
+          xcrun simctl list devices available
+
+          # Find the latest iOS runtime and first available iPhone
+          DEVICE_INFO=$(xcrun simctl list devices available -j | ruby -rjson -e '
+            data = JSON.parse($stdin.read)
+
+            # Extract dotted version from runtime key
+            # e.g. "com.apple.CoreSimulator.SimRuntime.iOS-18-5" -> "18.5"
+            def runtime_version(key)
+              if m = key.match(/iOS[- ](\d+(?:[.-]\d+)*)/)
+                m[1].tr("-", ".")
+              end
+            end
+
+            # Find iOS runtimes that have devices, sorted by version
+            ios_runtimes = data["devices"].keys
+              .select { |k| k.include?("iOS") && runtime_version(k) }
+              .sort_by { |k| Gem::Version.new(runtime_version(k)) }
+              .reverse
+
+            ios_runtimes.each do |runtime|
+              devices = data["devices"][runtime]
+              # Prefer iPhone 16, then iPhone 15, then any iPhone
+              device = devices.find { |d| d["name"].include?("iPhone 16") } ||
+                       devices.find { |d| d["name"].include?("iPhone 15") } ||
+                       devices.find { |d| d["name"].include?("iPhone") }
+              if device
+                version = runtime_version(runtime)
+                puts "#{device["udid"]} #{device["name"]} #{version}"
+                exit
+              end
+            end
+            abort "No available iPhone simulator found"
+          ')
+
+          UDID=$(echo "$DEVICE_INFO" | awk '{print $1}')
+          DEVICE_NAME=$(echo "$DEVICE_INFO" | awk '{for(i=2;i<NF;i++) printf $i" "; print ""}' | sed 's/ *$//')
+          # Version is the last field
+          IOS_VERSION=$(echo "$DEVICE_INFO" | awk '{print $NF}')
+
+          echo "Selected: $DEVICE_NAME (iOS $IOS_VERSION) — UDID: $UDID"
+
+          # Export for use in later steps
+          echo "SIM_UDID=$UDID" >> "$GITHUB_ENV"
+          echo "IOS_DEVICE_NAME=$DEVICE_NAME" >> "$GITHUB_ENV"
+          echo "IOS_PLATFORM_VERSION=$IOS_VERSION" >> "$GITHUB_ENV"
+
+          echo "Booting simulator..."
+          xcrun simctl bootstatus "$UDID" -b
+          echo "Simulator booted successfully."
+
+      - name: DEBUG
+        run: xcrun simctl list devices booted
+          
+      - name: Test
+        run: |
+          echo "Running tests against $IOS_DEVICE_NAME (iOS $IOS_PLATFORM_VERSION)"
+          bundle exec rspec --format documentation --backtrace --format html --out spec/test-results.html
+
+      - name: DEBUG
+        run: xcrun simctl list devices booted
+
+      - name: Archive All Logs and Reports
+        # This step will run even if the "Test" step fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-and-debug-logs
+          path: |
+            spec/test-results.html
+            appium.log
