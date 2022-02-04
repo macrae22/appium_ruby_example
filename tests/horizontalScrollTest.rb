@@ -1,10 +1,10 @@
 require './specs/spec_helper'
 require './hook.rb'
 require './common/common'
+require './screens/alert/alert'
 require './screens/device/device'
-require './screens/explore/inspiration_tab.rb'
-require './screens/feed/inspiration/seasonal_ingredients/seasonal_ingredients.rb'
-require './screens/feed/inspiration/inspiration.rb'
+require './screens/search/search'
+require './screens/feed/guest_feed/seasonalIngredients'
 Dir["./screens/login/*.rb"].each {|file| require file }
 
 describe 'Seasonal Ingredients' do
@@ -15,20 +15,19 @@ describe 'Seasonal Ingredients' do
       wait { MainNavBar.explore_button }
   
       # Wait for seasonal ingredients to display within Feed
-      exists { SeasonalIngredients.recipe_list_recycler_view.displayed? }
+      exists { SeasonalIngredients.collection_view.displayed? }
       
       # Swipe horizontally to `view all recipes` button
-      Common.swipe_to("feedIngredientRecipesRecyclerView", "viewMoreButton")
+      Common.swipe_to("**/XCUIElementTypeCell[`name == 'inspiration_seasonal_ingredients_ingredient_cell'`]/**/XCUIElementTypeCollectionView", "feed_show_more_button", :class_chain, :name)
 
       # Click `view more buttton`
-      SeasonalIngredients.view_more_button.click()
+      SeasonalIngredients.feed_show_more_button.click()
 
       # Accept location permissions
-      allowAccessButton = $driver.find_element(:id, 'locationPermissionPositiveCtaTextView')
-      allowAccessButton.click()
+      Search.location_permissions_intercept_drawer.click()
 
-      # Accept device location permissions
-      Device::Location_Permissions.location_permission_allow_button.click()
+      # Dismiss device location permissions
+      Alert.dismiss
 
       # Confirm `search nav` is enabled
       search_nav_button = MainNavBar.search_button

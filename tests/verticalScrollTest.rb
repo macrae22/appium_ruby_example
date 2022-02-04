@@ -2,8 +2,8 @@ require './specs/spec_helper'
 require './hook.rb'
 require './common/common'
 require './screens/explore/inspiration_tab.rb'
-require './screens/recipeView/recipeView.rb'
-require './screens/feed/inspiration/inspiration.rb'
+require './screens/cooksnap/cooksnapview.rb'
+require './screens/feed/guest_feed/cooksnapsection.rb'
 Dir["./screens/login/*.rb"].each {|file| require file }
 
 describe 'Guest user can' do
@@ -14,11 +14,11 @@ describe 'Guest user can' do
     wait { MainNavBar.explore_button }
 
     # Scroll down and click on recipe
-    Common.scroll_to("inspirationRecipeWithImageImageView")
-    InspirationFeed.recipe_image_view.click
+    Common.scroll_to(:accessibility_id, "inspiration_cooksnap_cell")
+    CooksnapSection.cooksnap_cell[1].click
 
     # Assert we are on the recipe screen
-    recipe_title = RecipeView.title_text_view
-    expect(recipe_title.displayed?).to eql true
+    original_recipe_title = CooksnapView.original_recipe_title
+    expect(original_recipe_title.displayed?).to eql true
   end
 end

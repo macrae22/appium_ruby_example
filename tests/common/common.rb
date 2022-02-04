@@ -44,9 +44,13 @@ module Common
     
             # Get scrollable element dimensions
             location = ele1.location
-            x = location.x
-            y = location.y
-    
+            size = ele1.size
+
+            loc_x = location.x
+            loc_y = location.y
+            width = size.width
+            height = size.height
+            
             print "Element location  #{location} \n"
     
             # Check whether element exists
@@ -60,7 +64,7 @@ module Common
             else
                 # If element doesn't exist, swipe left
                 print "Swiping left...\n"
-                $touch.swipe(start_x: y, start_y: y, end_x: x, end_y: y, duration: 200).perform
+                $touch.swipe(start_x: width/2, start_y: loc_y + height/2, end_x: loc_x, end_y: loc_y + height/2, duration: 200).perform
             end
         end    
     end
