@@ -1,24 +1,13 @@
-require './specs/spec_helper'
+require '../specs/spec_helper'
 require './hook.rb'
-require './common/common'
-require './screens/explore/inspiration_tab.rb'
-require './screens/recipeView/recipeView.rb'
-require './screens/feed/inspiration/inspiration.rb'
-require './scenarios/login/login_scenarios.rb'
-require './screens/alert/alert.rb'
-require './screens/profile/profile.rb'
-require './screens/region_selector/region_selector.rb'
-Dir["./screens/login/*.rb"].each {|file| require file }
+require '../views/recipeView/recipeView.rb'
 
 describe 'Deeplinks' do
 
   it 'Can open recipe within app' do
 
-    # Login
-    LoginScenarios.login()
-
     # Open deeplink
-    $driver.get("https://cookpad.com/us/recipes/15678199")
+    get("https://cookpad.com/us/recipes/15678199")
     
     # Confirm recipe displayed
     recipeTitle = RecipeView.title_text_view

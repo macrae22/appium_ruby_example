@@ -1,15 +1,16 @@
-require './specs/spec_helper'
 require './hook.rb'
-require './common/common'
-require './screens/alert/alert'
-require './screens/device/device'
-require './screens/search/search'
-require './screens/feed/guest_feed/seasonalIngredients'
-Dir["./screens/login/*.rb"].each {|file| require file }
+require '../views/alert/alert'
+require '../views/device/device'
+require '../common/common'
+require '../views/search/search'
+require '../views/feed/guest_feed/seasonalIngredients'
+require '../views/login/main_nav_bar'
 
 describe 'Seasonal Ingredients' do
 
     it '`View all` recipes button opens search' do
+      
+      view_all_recipes_btn = ["**/XCUIElementTypeCell[`name == 'inspiration_seasonal_ingredients_ingredient_cell'`]/**/XCUIElementTypeCollectionView", "feed_show_more_button", :class_chain, :name]
     
       # Wait for Feed to be displayed
       wait { MainNavBar.explore_button }
@@ -18,7 +19,7 @@ describe 'Seasonal Ingredients' do
       exists { SeasonalIngredients.collection_view.displayed? }
       
       # Swipe horizontally to `view all recipes` button
-      Common.swipe_to("**/XCUIElementTypeCell[`name == 'inspiration_seasonal_ingredients_ingredient_cell'`]/**/XCUIElementTypeCollectionView", "feed_show_more_button", :class_chain, :name)
+      Common.swipe_to(*view_all_recipes_btn)
 
       # Click `view more buttton`
       SeasonalIngredients.feed_show_more_button.click()
