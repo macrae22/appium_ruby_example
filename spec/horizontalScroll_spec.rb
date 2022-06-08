@@ -1,10 +1,11 @@
-require './hook.rb'
-require '../views/alert/alert'
-require '../views/device/device'
-require '../common/common'
-require '../views/search/search'
-require '../views/feed/guest_feed/seasonalIngredients'
-require '../views/login/main_nav_bar'
+require './spec/spec_helper'
+require './spec/hook.rb'
+require './views/alert/alert'
+require './views/device/device'
+require './common/common'
+require './views/search/search'
+require './views/feed/guest_feed/seasonalIngredients'
+require './views/login/main_nav_bar'
 
 describe 'Seasonal Ingredients' do
 

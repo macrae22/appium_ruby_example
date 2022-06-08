@@ -1,9 +1,9 @@
-require '../specs/spec_helper'
+require './spec/spec_helper'
 
 module Common
 
     def self.safe_click(element)
-        print "Waiting for element to be enabled...\n"
+        print "\nWaiting for element to be enabled...\n"
         wait = Selenium::WebDriver::Wait.new :timeout => 10
         wait.until { element.enabled? }
         print "Element enabled!\n"
@@ -21,12 +21,12 @@ module Common
             #print "Screen size  #{size} \n"
 
             # Check whether element exists
-            print "Looking for element(s)...\n"
+            print "\nLooking for element(s)...\n"
             ele = exists { find_element(strategy, element).displayed? }
             
             # If element exists, break the loop
             if ele == true
-                print "Element displayed!"
+                print "Element displayed!\n"
                 break
             else
                 # If element doesn't exist, swipe down
@@ -54,12 +54,12 @@ module Common
             #print "Element location  #{location} \n"
     
             # Check whether element exists
-            print "Looking for element(s)...\n"
+            print "\nLooking for element(s)...\n"
             ele2 = exists { find_element(strategy2, element2).displayed? }
                 
             # If element exists, break the loop
             if ele2 == true
-                print "Element displayed!"
+                print "Element displayed!\n"
                 break
             else
                 # If element doesn't exist, swipe left

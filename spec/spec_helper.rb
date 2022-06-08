@@ -6,7 +6,7 @@ def ios_caps
         platformName: 'iOS',
         platformVersion: ENV["IOS_PLATFORM_VERSION"] || '15.2',
         deviceName: ENV["IOS_DEVICE_NAME"] || 'iPhone 12',
-        app: '../apps/global.zip',
+        app: './apps/global.zip',
         automationName: 'XCUITest',
     },
     appium_lib: {

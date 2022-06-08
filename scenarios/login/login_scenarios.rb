@@ -1,11 +1,11 @@
-require './hook.rb'
-require '../common/common'
-require '../views/explore/inspiration_tab.rb'
-require '../scenarios/login/login_scenarios.rb'
-require '../views/alert/alert.rb'
-require '../views/profile/profile.rb'
-require '../views/region_selector/region_selector.rb'
-Dir["../views/login/*.rb"].each {|file| require file }
+require './spec/hook.rb'
+require './common/common'
+require './views/explore/inspiration_tab.rb'
+require './scenarios/login/login_scenarios.rb'
+require './views/alert/alert.rb'
+require './views/profile/profile.rb'
+require './views/region_selector/region_selector.rb'
+Dir["./views/login/*.rb"].each {|file| require file }
 
 module LoginScenarios
 

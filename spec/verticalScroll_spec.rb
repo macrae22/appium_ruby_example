@@ -1,10 +1,10 @@
-require '../specs/spec_helper'
-require './hook.rb'
-require '../common/common'
-require '../views/explore/inspiration_tab'
-require '../views/cooksnap/cooksnapview'
-require '../views/feed/guest_feed/cooksnapsection'
-require '../views/login/main_nav_bar'
+require './spec/spec_helper'
+require './spec/hook'
+require './common/common'
+require './views/explore/inspiration_tab'
+require './views/cooksnap/cooksnapview'
+require './views/feed/guest_feed/cooksnapsection'
+require './views/login/main_nav_bar'
 
 describe 'Guest user can' do
 

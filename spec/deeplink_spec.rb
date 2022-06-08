@@ -1,6 +1,6 @@
-require '../specs/spec_helper'
-require './hook.rb'
-require '../views/recipeView/recipeView.rb'
+require './spec/spec_helper'
+require './spec/hook.rb'
+require './views/recipeView/recipeView.rb'
 
 describe 'Deeplinks' do
 

@@ -1,4 +1,4 @@
-require '../scenarios/login/login_scenarios.rb'
+require './scenarios/login/login_scenarios.rb'
 
 describe 'Login' do
 
