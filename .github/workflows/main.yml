@@ -29,6 +29,9 @@ jobs:
          
       - name: Setup node
         uses: actions/setup-node@v3
+        
+      - name: Install project gems
+        run: bundle install
           
       - name: Install & start Appium Server
         run: |
