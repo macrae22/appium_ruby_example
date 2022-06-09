@@ -31,6 +31,8 @@ module Common
             else
                 # If element doesn't exist, swipe down
                 print "Swiping...\n"
+                
+                # execute_script('mobile: scroll', direction: 'down')
                 $touch.swipe(start_x: width, start_y: height, end_x: width, end_y: height - 200, duration: 500).perform
             end
         end
