@@ -25,10 +25,10 @@ jobs:
 
     # Setup Ruby and Bundler
       - name: Setup Ruby
-      - uses: actions/setup-ruby@v1
+        uses: actions/setup-ruby@v1
          
       - name: Setup node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v3
         
    # Not needed if `bundler-cache: true`   
       #- name: Install project gems
