@@ -29,10 +29,6 @@ jobs:
          
       - name: Setup node
         uses: actions/setup-node@v3
-        
-   # Not needed if `bundler-cache: true`   
-      #- name: Install project gems
-      #  run: bundle install
           
       - name: Install & start Appium Server
         run: |
@@ -40,8 +36,11 @@ jobs:
           appium -v
           appium &>/dev/null &
           
+      - name: Test
+        run: bundle exec rspec --format html --out rspec_results.html
+          
       - name: Archive test coverage results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-coverage-report
-          path: spec/tests/rspec_results.html
+          path: rspec_results.html
