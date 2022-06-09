@@ -18,6 +18,7 @@ describe 'Guest user can' do
     CooksnapSection.cooksnap_cell[1].click
 
     # Assert we are on the recipe screen
+    wait { CooksnapView.original_recipe_title }
     original_recipe_title = CooksnapView.original_recipe_title
     expect(original_recipe_title.displayed?).to eql true
   end
