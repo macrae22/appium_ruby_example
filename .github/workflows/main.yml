@@ -40,7 +40,7 @@ jobs:
           appium &>/dev/null &
           
       - name: Test
-        run: bundle exec rspec -out test-results.html
+        run: bundle exec rspec --format html --out test-results.html
           
       - name: Archive test coverage results
         uses: actions/upload-artifact@v3
