@@ -1,11 +1,11 @@
-![CI workflow](https://github.com/macrae22/ruby_appium_example_ios/actions/workflows/main.yml/badge.svg)
+![CI workflow](https://github.com/macrae22/appium_ruby_example_iOS/actions/workflows/main.yml/badge.svg)
 
-# ♦️ ruby_appium_example_iOS
+# ♦️ Appium ruby example iOS
 Android automation testing using Appium, Ruby, and design pattern Page Object Model (POM).
 
 ## ⚙️ Setup
 ### 👬 Cloning project
-1. Clone the project (`git clone https://github.com/macrae22/ruby_appium_example_ios.git`)
+1. Clone the project (`git clone https://github.com/macrae22/appium_ruby_example_iOS.git`)
 
 ### 💿 Install bundler
 Bundler is a dependancy manager for Ruby gems</br>
@@ -26,10 +26,10 @@ Bundler is a dependancy manager for Ruby gems</br>
 There are 4 main examples which I hope will help you.  
 
 **verticalscrolltest**  
-There is a [scroll_to](https://github.com/macrae22/ruby_appium_example_iOS/blob/2ec14f3a01814c66148a4fc0892dbf3fa87cab23/common/common.rb#L13) method which allows you to scroll vertically to an element.
+There is a [scroll_to](https://github.com/macrae22/appium_ruby_example_iOS/blob/2ec14f3a01814c66148a4fc0892dbf3fa87cab23/common/common.rb#L13) method which allows you to scroll vertically to an element.
 
 **horizontalscrolltest**
-This test uses a [swipe_to](https://github.com/macrae22/ruby_appium_example_iOS/blob/2ec14f3a01814c66148a4fc0892dbf3fa87cab23/common/common.rb#L41) method which allows you to swipe horizontally to an element.
+This test uses a [swipe_to](https://github.com/macrae22/appium_ruby_example_iOS/blob/2ec14f3a01814c66148a4fc0892dbf3fa87cab23/common/common.rb#L41) method which allows you to swipe horizontally to an element.
 
 **deeplinktest**
 Deeplink testing is very straight forward in Appium, check it out.
