@@ -5,7 +5,7 @@ Android automation testing using Appium, Ruby, and design pattern Page Object Mo
 
 ## ⚙️ Setup
 ### 👬 Cloning project
-1. Clone the project (`git clone https://github.com/macrae22/ruby_appium_example.git`)
+1. Clone the project (`git clone https://github.com/macrae22/ruby_appium_example_ios.git`)
 
 ### 💿 Install bundler
 Bundler is a dependancy manager for Ruby gems</br>
