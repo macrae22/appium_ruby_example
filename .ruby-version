@@ -1,3 +1,0 @@
-rbenv install 3.3
-gem install bundler
-bundle lock --add-platform arm64-darwin-23
