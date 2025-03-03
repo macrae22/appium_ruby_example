@@ -26,6 +26,9 @@ jobs:
     # Setup Ruby and Bundler
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3' # Not needed with a .ruby-version, .tool-versions or mise.toml
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
          
       - name: Setup node
         uses: actions/setup-node@v3
