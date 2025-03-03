@@ -5,21 +5,32 @@ Android automation testing using Appium, Ruby, and design pattern Page Object Mo
 
 ## ⚙️ Setup
 ### 👬 Cloning project
-1. Clone the project (`git clone https://github.com/macrae22/appium_ruby_example_iOS.git`)
+1. Clone the project <br> 
+```
+git clone https://github.com/macrae22/appium_ruby_example_iOS.git
+```
 
 ### 💿 Install bundler
 Bundler is a dependancy manager for Ruby gems</br>
 
-2. Download bundler (`gem install bundler`)
-3. Install project gems (`bundle install`)
+2. Download bundler <br>
+4. Install project gems <br>
+```
+gem install bundler
+bundle install
+```
 
 ### 💽 Appium Server
 4. Install Appium Server (http://appium.io/)
 5. Start Appium Server from GUI
 
 ### 🧪 Running tests
-6. Run `bundle exec rspec` to run all tests
-7. Run `bundle exec rspec spec/tests/horizontalscrolltest.rb` for a specific test spec
+6. Run to run all tests
+7. Run for a specific test spec <br>
+```
+bundle exec rspec
+bundle exec rspec spec/tests/horizontalscrolltest.rb
+```
 
 -------------------------
 ## Test Examples
