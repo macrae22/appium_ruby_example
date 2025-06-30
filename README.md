@@ -4,29 +4,32 @@
 iOS automation testing using Appium, Ruby, and the Page Object Model (POM) design pattern.
 
 ## ⚙️ Setup
-
-### 1. Cloning Project
-Clone the project to your local machine:
+### 👬 Cloning project
+1. Clone the project to your local machine: <br> 
 ```bash
 git clone https://github.com/macrae22/appium_ruby_example_iOS.git
 ```
 
-### 2. Install Dependencies
-Bundler is a dependency manager for Ruby gems. Install it and the project's gems:
+### 💿 Install bundler
+Bundler is a dependancy manager for Ruby gems</br>
+
+2. Download bundler
+4. Install project gems
 ```bash
 gem install bundler
 bundle install
 ```
 
-### 3. Appium Server
-Install and run the Appium Server. You can download it from the official [Appium website](http://appium.io/).
+### 💽 Appium Server
+4. Install Appium Server (http://appium.io/)
+5. Start Appium Server from GUI
 
-### 4. Running Tests
-To run all tests:
+### 🧪 Running tests
+6. To run all tests:
 ```bash
 bundle exec rspec
 ```
-To run a specific test:
+7. To run a specific test:</br>
 ```bash
 bundle exec rspec spec/tests/horizontal_scroll_spec.rb
 ```
@@ -48,10 +51,10 @@ This project is set up to use **GitHub Actions** and will automatically run all 
 You can see the CI setup in the [main.yml](https://github.com/macrae22/appium_ruby_example_iOS/blob/main/.github/workflows/main.yml) file.
 
 The workflow performs the following steps:
-*   Spins up a **macOS** virtual machine.
-*   Checks out the project code.
-*   Installs **Ruby**.
-*   Sets up **Node.js**.
-*   Installs the **Appium Server**.
-*   Runs the tests.
+*   Spins up a **macOS** virtual machine
+*   Checks out the project code
+*   Installs **Ruby**
+*   Sets up **Node.js**
+*   Installs the **Appium Server**
+*   Runs the tests
 
