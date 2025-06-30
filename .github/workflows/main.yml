@@ -41,6 +41,12 @@ jobs:
           npm install -g appium
           appium driver install xcuitest
           appium -v
+
+      - name: Pre-launch iOS Simulator
+        run: |
+          # Find a booted simulator and open it
+          open -a /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
+          sleep 15 # Give the Simulator app time to open
           
       - name: Start Appium Server in Background
         run: appium &>/dev/null &
