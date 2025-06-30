@@ -26,7 +26,8 @@ RSpec.configure do |config|
         server_url: 'http://127.0.0.1:4723',
         wait: 10,
         newCommandTimeout: 180,
-        read_timeout: 300
+        read_timeout: 300,
+        wdaLaunchTimeout: 240000
       }
     }
 
