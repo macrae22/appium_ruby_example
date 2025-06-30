@@ -1,79 +1,61 @@
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: macos-15
+    runs-on: macos-14
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-    # Setup Ruby and Bundler
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3' # Not needed with a .ruby-version, .tool-versions or mise.toml
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-         
-      - name: Setup node
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
-        
-      - name: Install project gems
-        run: bundle install
+
+      # --- NEW STEP TO WARM UP XCODE ---
+      - name: Warm up Xcode and SDK
+        run: |
+          echo "Running xcrun to determine SDK version..."
+          xcrun --sdk iphonesimulator --show-sdk-version
+          echo "Xcode SDK check complete."
           
       - name: Install Appium and XCUITest Driver
         run: |
           npm install -g appium
           appium driver install xcuitest
-          appium -v
-
-      - name: Pre-launch iOS Simulator
-        run: |
-          # Find a booted simulator and open it
-          open -a /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
-          sleep 15 # Give the Simulator app time to open
           
-      - name: Start Appium Server and Wait for it to be Ready
+      - name: Start Appium Server and Wait
         run: |
           appium &>/dev/null &
-          
-          # Wait for Appium to be ready by polling the status endpoint
           echo "Waiting for Appium server to start..."
           timeout=60
           while ! curl -s http://127.0.0.1:4723/status && [ $timeout -gt 0 ]; do
             sleep 1
             timeout=$((timeout-1))
           done
-          
           if [ $timeout -eq 0 ]; then
-            echo "Appium server failed to start in time."
+            echo "Appium server failed to start."
             exit 1
           fi
-          
-          echo "Appium server is ready."
-          
           echo "Appium server is ready."
           
       - name: Test
         run: bundle exec rspec --format html --out spec/test-results.html
           
-      - name: Archive test coverage results
+      - name: Archive test results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-coverage-report
+          name: test-results-report
           path: spec/test-results.html
