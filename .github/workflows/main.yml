@@ -36,11 +36,14 @@ jobs:
       - name: Install project gems
         run: bundle install
           
-      - name: Install & start Appium Server
+      - name: Install Appium and XCUITest Driver
         run: |
           npm install -g appium
+          appium driver install xcuitest
           appium -v
-          appium &>/dev/null &
+          
+      - name: Start Appium Server in Background
+        run: appium &>/dev/null &
           
       - name: Test
         run: bundle exec rspec --format html --out spec/test-results.html
