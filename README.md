@@ -1,65 +1,57 @@
 ![CI workflow](https://github.com/macrae22/appium_ruby_example_iOS/actions/workflows/main.yml/badge.svg)
 
-# ♦️ Appium ruby example (iOS)
-Android automation testing using Appium, Ruby, and design pattern Page Object Model (POM).
+# ♦️ Appium Ruby Example (iOS)
+iOS automation testing using Appium, Ruby, and the Page Object Model (POM) design pattern.
 
 ## ⚙️ Setup
-### 👬 Cloning project
-1. Clone the project <br> 
-```
+
+### 1. Cloning Project
+Clone the project to your local machine:
+```bash
 git clone https://github.com/macrae22/appium_ruby_example_iOS.git
 ```
 
-### 💿 Install bundler
-Bundler is a dependancy manager for Ruby gems</br>
-
-2. Download bundler <br>
-4. Install project gems <br>
-```
+### 2. Install Dependencies
+Bundler is a dependency manager for Ruby gems. Install it and the project's gems:
+```bash
 gem install bundler
 bundle install
 ```
 
-### 💽 Appium Server
-4. Install Appium Server (http://appium.io/)
-5. Start Appium Server from GUI
+### 3. Appium Server
+Install and run the Appium Server. You can download it from the official [Appium website](http://appium.io/).
 
-### 🧪 Running tests
-6. Run to run all tests
-7. Run for a specific test spec <br>
-```
+### 4. Running Tests
+To run all tests:
+```bash
 bundle exec rspec
-bundle exec rspec spec/tests/horizontalscrolltest.rb
+```
+To run a specific test:
+```bash
+bundle exec rspec spec/tests/horizontal_scroll_spec.rb
 ```
 
--------------------------
-## Test Examples
-There are 4 main examples which I hope will help you.  
+---
 
-**verticalscrolltest**  
-There is a [scroll_to](https://github.com/macrae22/appium_ruby_example_iOS/blob/2ec14f3a01814c66148a4fc0892dbf3fa87cab23/common/common.rb#L13) method which allows you to scroll vertically to an element.
+## Test Example
 
-**horizontalscrolltest**
-This test uses a [swipe_to](https://github.com/macrae22/appium_ruby_example_iOS/blob/2ec14f3a01814c66148a4fc0892dbf3fa87cab23/common/common.rb#L41) method which allows you to swipe horizontally to an element.
+This project demonstrates a horizontal swipe test.
 
-**deeplinktest**
-Deeplink testing is very straight forward in Appium, check it out.
+**horizontal_scroll_spec**
+This test uses a `swipe_until_element_is_visible` method, which allows you to swipe horizontally until a target element is found. You can see the implementation in [common/common.rb](https://github.com/macrae22/appium_ruby_example_iOS/blob/main/common/common.rb).
 
-**logintest**
-This test contains a method _(scenario)_ to login _(essentially extracting out login steps into a method)_
+---
 
--------------------------
 ## 🤖 CI
-This project is setup to use **Github Actions** and will kick-off all UI tests when a new pull-request is submitted.
+This project is set up to use **GitHub Actions** and will automatically run all UI tests when a new pull request is submitted.
 
-You can see the CI setup within [main.yml](https://github.com/macrae22/ruby_appium_example_iOS/tree/main/.github/workflows).
+You can see the CI setup in the [main.yml](https://github.com/macrae22/appium_ruby_example_iOS/blob/main/.github/workflows/main.yml) file.
 
-Essentially it does the following:
-* Spins up a **MacOS-11** VM
-* Checkouts the project
-* Installs **Ruby**
-* Sets up **node**
-* Installs **Appium Server**
-* Runs tests
-* Generates **testing results report**
+The workflow performs the following steps:
+*   Spins up a **macOS** virtual machine.
+*   Checks out the project code.
+*   Installs **Ruby**.
+*   Sets up **Node.js**.
+*   Installs the **Appium Server**.
+*   Runs the tests.
 
