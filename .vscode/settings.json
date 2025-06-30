@@ -1,0 +1,8 @@
+// settings.json
+{
+    "solargraph.transport": "stdio",
+    "solargraph.formatting": true,
+    "solargraph.diagnostics": true,
+    "solargraph.commandPath": "/Users/martyn.macrae/.rbenv/shims/solargraph",
+    "solargraph.useBundler": true,
+}

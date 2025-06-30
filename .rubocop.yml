@@ -1,0 +1,13 @@
+# .rubocop.yml
+
+# Allow longer modules, since common.rb holds multiple helpers.
+Metrics/ModuleLength:
+  Max: 150 # Default is 100, increase as needed
+
+# Disable the check for method length.
+Metrics/MethodLength:
+  Enabled: false
+
+# Disable the check for code complexity (Assignment, Branch, Condition size).
+Metrics/AbcSize:
+  Enabled: false
