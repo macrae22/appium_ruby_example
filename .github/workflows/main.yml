@@ -48,8 +48,26 @@ jobs:
           open -a /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
           sleep 15 # Give the Simulator app time to open
           
-      - name: Start Appium Server in Background
-        run: appium &>/dev/null &
+      - name: Start Appium Server and Wait for it to be Ready
+        run: |
+          appium &>/dev/null &
+          
+          # Wait for Appium to be ready by polling the status endpoint
+          echo "Waiting for Appium server to start..."
+          timeout=60
+          while ! curl -s http://127.0.0.1:4723/status && [ $timeout -gt 0 ]; do
+            sleep 1
+            timeout=$((timeout-1))
+          done
+          
+          if [ $timeout -eq 0 ]; then
+            echo "Appium server failed to start in time."
+            exit 1
+          fi
+          
+          echo "Appium server is ready."
+          
+          echo "Appium server is ready."
           
       - name: Test
         run: bundle exec rspec --format html --out spec/test-results.html
