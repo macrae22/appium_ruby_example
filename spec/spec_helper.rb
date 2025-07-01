@@ -25,9 +25,9 @@ RSpec.configure do |config|
       appium_lib: {
         server_url: 'http://127.0.0.1:4723',
         wait: 10,
-        newCommandTimeout: 1800,
-        read_timeout: 3000,
-        wdaLaunchTimeout: 2400000
+        newCommandTimeout: 180,
+        read_timeout: 300,
+        wdaLaunchTimeout: 240000
       }
     }
 
