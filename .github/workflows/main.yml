@@ -49,6 +49,9 @@ jobs:
             exit 1
           fi
           echo "Appium server is ready."
+
+      - name: List Available Simulators
+        run: xcrun simctl list devices
           
       - name: Test
         run: bundle exec rspec --format html --out spec/test-results.html
