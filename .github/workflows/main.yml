@@ -48,20 +48,6 @@ jobs:
             exit 1
           fi
           echo "Appium server is ready."
-
-      - name: List Available Simulators
-        run: xcrun simctl list devices
-
-      - name: Boot Simulator
-        run: |
-          echo "Booting simulator with UDID: F5D8ED67-0C40-4590-9F8E-71C2B098E6E1"
-          xcrun simctl boot F5D8ED67-0C40-4590-9F8E-71C2B098E6E1
-          # Wait until the simulator has finished booting
-          xcrun simctl bootstatus F5D8ED67-0C40-4590-9F8E-71C2B098E6E1 -b
-          echo "Simulator booted successfully."
-
-      - name: List Available Simulators
-        run: xcrun simctl list devices
           
       - name: Test
         run: bundle exec rspec --format html --out spec/test-results.html
