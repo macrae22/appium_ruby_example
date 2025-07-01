@@ -1,7 +1,7 @@
 ![CI workflow](https://github.com/macrae22/appium_ruby_example_iOS/actions/workflows/main.yml/badge.svg)
 
-# ♦️ Appium Ruby Example (iOS)
-iOS automation testing using Appium, Ruby, and the Page Object Model (POM) design pattern.
+# ♦️ Appium Ruby Example
+Automation testing using Appium, Ruby, and the Page Object Model (POM) design pattern.
 
 ## ⚙️ Setup
 ### 👬 Cloning project
