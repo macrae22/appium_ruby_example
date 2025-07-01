@@ -23,12 +23,21 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
 
-      # --- NEW STEP TO WARM UP XCODE ---
       - name: Warm up Xcode and SDK
         run: |
           echo "Running xcrun to determine SDK version..."
           xcrun --sdk iphonesimulator --show-sdk-version
           echo "Xcode SDK check complete."
+
+      - name: Boot Simulator
+        run: |
+          # Find the UDID of the iPhone 16 Pro for iOS 18.1 and boot it
+          UDID=$(xcrun simctl list devices 'iPhone 16 Pro' | grep '18.1' | awk -F'[()]' '{print $2}' | head -n 1)
+          echo "Booting simulator with UDID: $UDID"
+          xcrun simctl boot "$UDID"
+          # Wait until the simulator has finished booting
+          xcrun simctl bootstatus "$UDID" -b
+          echo "Simulator booted successfully."
           
       - name: Install Appium and XCUITest Driver
         run: |
