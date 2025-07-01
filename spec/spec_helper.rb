@@ -18,7 +18,7 @@ RSpec.configure do |config|
       caps: {
         platformName: 'iOS',
         platformVersion: ENV['IOS_PLATFORM_VERSION'] || '18.1',
-        deviceName: ENV['IOS_DEVICE_NAME'] || 'iPhone 15 Pro',
+        deviceName: ENV['IOS_DEVICE_NAME'] || 'iPhone 16 Pro',
         app: 'apps/testing-app.zip',
         automationName: 'XCUITest'
       },
