@@ -56,6 +56,11 @@ jobs:
         run: |
           # Find the UDID of the iPhone 16 Pro for iOS 18.1 and boot it
           UDID=$(xcrun simctl list devices 'iPhone 16 Pro' | grep '18.1' | awk -F'[()]' '{print $2}' | head -n 1)
+          if [ -z "$UDID" ]; then
+            echo "Simulator for iPhone 16 Pro with iOS 18.1 not found. Listing available devices:"
+            xcrun simctl list devices
+            exit 1
+          fi
           echo "Booting simulator with UDID: $UDID"
           xcrun simctl boot "$UDID"
           # Wait until the simulator has finished booting
