@@ -23,9 +23,6 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
 
-      - name: Install project gems
-        run: bundle install
-
       - name: Warm up Xcode and SDK
         run: |
           echo "Running xcrun to determine SDK version..."
