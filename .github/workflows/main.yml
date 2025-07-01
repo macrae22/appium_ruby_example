@@ -61,6 +61,9 @@ jobs:
           # Wait until the simulator has finished booting
           xcrun simctl bootstatus "$UDID" -b
           echo "Simulator booted successfully."
+
+      - name: List Available Simulators
+        run: xcrun simctl list devices
           
       - name: Test
         run: bundle exec rspec --format html --out spec/test-results.html
