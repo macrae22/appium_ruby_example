@@ -19,7 +19,7 @@ RSpec.configure do |config|
         platformName: 'iOS',
         platformVersion: ENV['IOS_PLATFORM_VERSION'] || '18.1',
         deviceName: ENV['IOS_DEVICE_NAME'] || 'iPhone 16 Pro',
-        app: 'TESTapps/testing-app.zip',
+        app: 'apps/testing-app.zip',
         automationName: 'XCUITest'
       },
       appium_lib: {
