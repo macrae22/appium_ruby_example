@@ -52,9 +52,18 @@ jobs:
       - name: Test
         run: bundle exec rspec --format html --out spec/test-results.html
           
-      - name: Archive test results
-        if: always()
+      # - name: Archive test results
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: test-results-report
+      #     path: spec/test-results.html
+
+      - name: Archive All Logs and Reports
+        if: always() # This ensures artifacts are uploaded even if tests fail
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-report
-          path: spec/test-results.html
+          name: test-and-debug-logs
+          path: |
+            spec/test-results.html
+            appium.log
