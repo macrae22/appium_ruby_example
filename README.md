@@ -7,7 +7,7 @@ Automation testing using Appium, Ruby, and the Page Object Model (POM) design pa
 ### 👬 Cloning project
 1. Clone the project to your local machine: <br> 
 ```bash
-git clone https://github.com/macrae22/appium_ruby_example_iOS.git
+git clone https://github.com/macrae22/appium_ruby_example.git
 ```
 
 ### 💿 Install bundler
