@@ -16,7 +16,7 @@ RSpec.configure do |config|
     ios_caps = {
       caps: {
         platformName: 'iOS',
-        platformVersion: ENV['IOS_PLATFORM_VERSION'] || '18.1',
+        platformVersion: ENV['IOS_PLATFORM_VERSION'] || '18.0',
         deviceName: ENV['IOS_DEVICE_NAME'] || 'iPhone SE (3rd generation)',
         app: 'apps/testing-app.zip',
         automationName: 'XCUITest'
