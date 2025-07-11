@@ -52,7 +52,6 @@ jobs:
       - name: Test
         run: |
           bundle exec rspec --format documentation --out spec/test-results.html
-          xcrun simctl list devices
           
       - name: Archive test results
         if: always()
