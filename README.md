@@ -59,6 +59,6 @@ The workflow performs the following steps:
 
 ## 🌱 Contribute
 Feel free to contribute or request more examples.<br />
-The plan is to create clean examples which help the automation community.
+The plan is to create clean examples which help the automation beginners get of the ground 🛫.
 
 
