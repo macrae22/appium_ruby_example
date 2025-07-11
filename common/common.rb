@@ -27,8 +27,20 @@ module Common
       end_x = loc_x + width * 0.9
       y = loc_y + height / 2
       start_y = end_y = y
+    when 'up'
+      # Swipe from bottom to top to scroll up
+      start_y = loc_y + height * 0.8
+      end_y = loc_y + height * 0.2
+      x = loc_x + width / 2
+      start_x = end_x = x
+    when 'down'
+      # Swipe from top to bottom to scroll down
+      start_y = loc_y + height * 0.2
+      end_y = loc_y + height * 0.8
+      x = loc_x + width / 2
+      start_x = end_x = x
     else
-      raise "Invalid horizontal swipe direction: #{direction}"
+      raise "Invalid swipe direction: #{direction}"
     end
 
     # Perform swipe action
@@ -44,19 +56,31 @@ module Common
   end
 
   # Swipes until it finds the taget element
-  def swipe_until_element_is_visible(scroll_view, target_element, direction = 'left', max_swipes = 5)
+  def swipe_until_element_is_visible(scroll_view, target_element_locator, direction = 'left', max_swipes = 5)
     max_swipes.times do
       begin
-        if target_element.displayed? && target_element.enabled?
-          puts 'Target Element is clickable'
-          return
+        # Use the locator to find the element
+        element = find_element(target_element_locator.keys.first, target_element_locator.values.first)
+        if element.displayed? && element.enabled?
+          puts "\nTarget Element is clickable"
+          return element
         end
       rescue Selenium::WebDriver::Error::NoSuchElementError
         # Element not found, continue swiping
       end
-      puts "Swiping #{direction}"
+      puts "\nSwiping #{direction}"
       swipe_on_element(scroll_view, direction)
+      sleep 1
     end
-    raise "Element not found after #{max_swipes} swipes."
+
+    # One last attempt to find the element
+    begin
+      element = find_element(target_element_locator.keys.first, target_element_locator.values.first)
+      return element if element.displayed? && element.enabled?
+    rescue Selenium::WebDriver::Error::NoSuchElementError
+      # Element not found
+    end
+
+    raise "\nElement with locator '#{target_element_locator}' not found after #{max_swipes} swipes."
   end
 end

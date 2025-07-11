@@ -8,6 +8,9 @@ Metrics/ModuleLength:
 Metrics/MethodLength:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 # Disable the check for code complexity (Assignment, Branch, Condition size).
 Metrics/AbcSize:
   Enabled: false
