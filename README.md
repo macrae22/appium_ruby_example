@@ -59,7 +59,7 @@ The workflow performs the following steps:
 *   Runs the tests
 
 ## 🌱 Contribute
-Feel free to contribute or request more examples.
+Feel free to contribute or request more examples.<br />
 The plan is to create clean examples which help the automation community.
 
 
