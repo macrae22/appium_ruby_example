@@ -55,6 +55,7 @@ The workflow performs the following steps:
 *   Sets up **Node.js**
 *   Installs the **Appium Server**
 *   Runs the tests
+*   Saves the test artifacts _(test-results.html)_
 
 ## 🌱 Contribute
 Feel free to contribute or request more examples.<br />
