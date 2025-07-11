@@ -38,10 +38,10 @@ bundle exec rspec spec/tests/horizontal_scroll_spec.rb
 
 ## Test Example
 
-This project demonstrates a horizontal swipe test.
+This project demonstrates a horizontal & vertical swipe test.
 
-**horizontal_scroll_spec**
-This test uses a `swipe_until_element_is_visible` method, which allows you to swipe horizontally until a target element is found. You can see the implementation in [common/common.rb](https://github.com/macrae22/appium_ruby_example_iOS/blob/main/common/common.rb).
+**scroll_spec**
+These tests use a `swipe_until_element_is_visible` method, which allows you to swipe horizontally until a target element is found. You can see the implementation in [common/common.rb](https://github.com/macrae22/appium_ruby_example_iOS/blob/main/common/common.rb).
 
 ---
 
@@ -57,4 +57,9 @@ The workflow performs the following steps:
 *   Sets up **Node.js**
 *   Installs the **Appium Server**
 *   Runs the tests
+
+## 🌱 Contribute
+Feel free to contribute or request more examples.
+The plan is to create clean examples which help the automation community.
+
 
