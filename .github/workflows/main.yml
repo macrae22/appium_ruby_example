@@ -89,10 +89,13 @@ jobs:
 
       - name: DEBUG
         run: xcrun simctl list devices booted
-          
-      - name: Archive test results
+
+      - name: Archive All Logs and Reports
+        # This step will run even if the "Test" step fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-report
-          path: spec/test-results.html
+          name: test-and-debug-logs
+          path: |
+            spec/test-results.html
+            appium.log
