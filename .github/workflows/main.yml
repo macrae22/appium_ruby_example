@@ -49,6 +49,9 @@ jobs:
           fi
           echo "Appium server is ready."
 
+      - name: DEBUG
+        run: xcrun simctl list devices
+
       - name: Boot Simulator
         run: |
           # Find the UDID of the iPhone SE (3rd generation) for iOS 18.1
