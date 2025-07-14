@@ -33,24 +33,30 @@ jobs:
         run: |
           npm install -g appium
           appium driver install xcuitest
-          
-      - name: Start Appium Server and Wait
+
+      - name: Start Appium Server with Debug Logging
         run: |
-          appium &>/dev/null &
+          # Create the log file first to ensure permissions are correct
+          touch appium.log
+
+          # Start appium in the background using a more portable redirection
+          appium --log-level debug > appium.log 2>&1 &
+          
           echo "Waiting for Appium server to start..."
           timeout=60
           while ! curl -s http://127.0.0.1:4723/status && [ $timeout -gt 0 ]; do
             sleep 1
             timeout=$((timeout-1))
           done
+          
           if [ $timeout -eq 0 ]; then
-            echo "Appium server failed to start."
+            echo "Appium server failed to start in time."
+            # Print the log file for immediate debugging before exiting
+            cat appium.log
             exit 1
           fi
+          
           echo "Appium server is ready."
-
-      - name: DEBUG
-        run: xcrun simctl list devices
 
       - name: Boot Simulator
         # In the "Boot Simulator" step of main.yml
