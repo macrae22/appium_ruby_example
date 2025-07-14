@@ -48,9 +48,15 @@ jobs:
             exit 1
           fi
           echo "Appium server is ready."
+
+      - name: DEBUG
+        run: xcrun simctl list devices booted
           
       - name: Test
         run: bundle exec rspec --format documentation --backtrace --format html --out spec/test-results.html
+
+      - name: DEBUG
+        run: xcrun simctl list devices booted
           
       - name: Archive test results
         if: always()
