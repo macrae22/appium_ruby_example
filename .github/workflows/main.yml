@@ -55,18 +55,28 @@ jobs:
       - name: Boot Simulator
         # In the "Boot Simulator" step of main.yml
         run: |
-          # Find the UDID for the iPhone SE (3rd generation) on iOS 18.1
-          UDID=$(xcrun simctl list devices 'iPhone SE (3rd generation)' | grep '(18.1)' | awk -F'[()]' '{print $2}')
+          echo "Searching for simulator UDID..."
+          
+          # This awk script correctly parses the output to find the UDID
+          UDID=$(xcrun simctl list devices | awk '
+            /-- iOS 18.1 --/ {in_section=1}
+            /-- iOS/ && !/-- iOS 18.1 --/ {in_section=0}
+            in_section && /iPhone SE \(3rd generation\)/ {
+              match($0, /\(([-A-Z0-9]+)\)/);
+              if (RSTART) {
+                print substr($0, RSTART+1, RLENGTH-2);
+                exit;
+              }
+            }
+          ')
         
-          echo "Found UDID for iOS 18.1 iPhone SE: $UDID"
+          echo "Found simulator UDID: $UDID"
         
-          # Exit if the simulator wasn't found
           if [ -z "$UDID" ]; then
-            echo "Could not find a simulator matching 'iPhone SE (3rd generation)' with iOS 18.1."
+            echo "ERROR: Could not find UDID for 'iPhone SE (3rd generation)' on iOS 18.1."
             exit 1
           fi
         
-          # Boot the specific simulator and wait for it to be ready
           echo "Booting simulator..."
           xcrun simctl bootstatus "$UDID" -b
           echo "Simulator booted successfully."
