@@ -5,22 +5,42 @@ require_relative '../base_page'
 # Page Object for the Home View
 class Home < BasePage
   def horizontal_scroll_view_locator
-    { class_name: 'XCUIElementTypeScrollView' }
+    if android?
+      { class_name: 'android.widget.HorizontalScrollView' }
+    else
+      { class_name: 'XCUIElementTypeScrollView' }
+    end
   end
 
   def vertical_scroll_view_locator
-    { class_name: 'XCUIElementTypeCollectionView' }
+    if android?
+      { class_name: 'android.widget.ScrollView' }
+    else
+      { class_name: 'XCUIElementTypeCollectionView' }
+    end
   end
 
   def horizontal_photo_image_locator(index)
-    { class_chain: "**/XCUIElementTypeImage[`name == 'photo'`][#{index}]" }
+    if android?
+      { uiautomator: "new UiSelector().description(\"photo\").instance(#{index - 1})" }
+    else
+      { class_chain: "**/XCUIElementTypeImage[`name == 'photo'`][#{index}]" }
+    end
   end
 
   def vertical_text_option_locator
-    { class_chain: "**/XCUIElementTypeButton[`name == 'ladybug'`][2]" }
+    if android?
+      { uiautomator: 'new UiSelector().description("ladybug").instance(1)' }
+    else
+      { class_chain: "**/XCUIElementTypeButton[`name == 'ladybug'`][2]" }
+    end
   end
 
   def ladybug_image_locator
-    { accessibility_id: 'ladybug.fill' }
+    if android?
+      { accessibility_id: 'ladybug' }
+    else
+      { accessibility_id: 'ladybug.fill' }
+    end
   end
 end
