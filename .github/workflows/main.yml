@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  ios:
+  build:
     runs-on: macos-15
 
     steps:
@@ -28,7 +28,7 @@ jobs:
           echo "Running xcrun to determine SDK version..."
           xcrun --sdk iphonesimulator --show-sdk-version
           echo "Xcode SDK check complete."
-
+          
       - name: Install Appium and XCUITest Driver
         run: |
           npm install -g appium
@@ -41,21 +41,21 @@ jobs:
 
           # Start appium in the background using a more portable redirection
           appium --log-level debug > appium.log 2>&1 &
-
+          
           echo "Waiting for Appium server to start..."
           timeout=60
           while ! curl -s http://127.0.0.1:4723/status && [ $timeout -gt 0 ]; do
             sleep 1
             timeout=$((timeout-1))
           done
-
+          
           if [ $timeout -eq 0 ]; then
             echo "Appium server failed to start in time."
             # Print the log file for immediate debugging before exiting
             cat appium.log
             exit 1
           fi
-
+          
           echo "Appium server is ready."
 
       - name: Boot Simulator
@@ -114,13 +114,11 @@ jobs:
 
       - name: DEBUG
         run: xcrun simctl list devices booted
-
+          
       - name: Test
-        env:
-          PLATFORM: ios
         run: |
           echo "Running tests against $IOS_DEVICE_NAME (iOS $IOS_PLATFORM_VERSION)"
-          bundle exec rspec --format documentation --backtrace --format html --out spec/test-results-ios.html
+          bundle exec rspec --format documentation --backtrace --format html --out spec/test-results.html
 
       - name: DEBUG
         run: xcrun simctl list devices booted
@@ -130,91 +128,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ios-test-and-debug-logs
+          name: test-and-debug-logs
           path: |
-            spec/test-results-ios.html
-            appium.log
-
-  android:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-          bundler-cache: true
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-
-      - name: Check for Android app
-        id: check_apk
-        run: |
-          if [ -f "apps/testing-app.apk" ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::apps/testing-app.apk not found — skipping Android test run. Add an Android build of the app to enable this job."
-          fi
-
-      - name: Enable KVM
-        if: steps.check_apk.outputs.exists == 'true'
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-      - name: Install Appium and UiAutomator2 Driver
-        if: steps.check_apk.outputs.exists == 'true'
-        run: |
-          npm install -g appium
-          appium driver install uiautomator2
-
-      - name: Start Appium Server with Debug Logging
-        if: steps.check_apk.outputs.exists == 'true'
-        run: |
-          touch appium.log
-          appium --log-level debug > appium.log 2>&1 &
-
-          echo "Waiting for Appium server to start..."
-          timeout=60
-          while ! curl -s http://127.0.0.1:4723/status && [ $timeout -gt 0 ]; do
-            sleep 1
-            timeout=$((timeout-1))
-          done
-
-          if [ $timeout -eq 0 ]; then
-            echo "Appium server failed to start in time."
-            cat appium.log
-            exit 1
-          fi
-
-          echo "Appium server is ready."
-
-      - name: Run tests on Android Emulator
-        if: steps.check_apk.outputs.exists == 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 34
-          target: google_apis
-          arch: x86_64
-          profile: pixel_6
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script: |
-            echo "ANDROID_PLATFORM_VERSION=14" >> "$GITHUB_ENV"
-            echo "ANDROID_DEVICE_NAME=Android Emulator" >> "$GITHUB_ENV"
-            PLATFORM=android bundle exec rspec --format documentation --backtrace --format html --out spec/test-results-android.html
-
-      - name: Archive All Logs and Reports
-        if: always() && steps.check_apk.outputs.exists == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-test-and-debug-logs
-          path: |
-            spec/test-results-android.html
+            spec/test-results.html
             appium.log
